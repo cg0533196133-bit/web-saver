@@ -19,14 +19,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Install SingleFile CLI
-        run: npm install -g single-file-cli
+      - name: Install SingleFile and Playwright Chromium
+        run: |
+          npm install -g single-file-cli
+          npx playwright install chromium --with-deps
 
       - name: Download page and embed assets
         run: |
-          single-file "${{ github.event.inputs.url }}" output.html --browser-executable-path=""
+          single-file "${{ github.event.inputs.url }}" output.html
 
       - name: Upload HTML Artifact
         uses: actions/upload-artifact@v4
